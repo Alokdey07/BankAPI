@@ -1,10 +1,13 @@
 package com.easybytes.accounts.service.impl;
 
 import com.easybytes.accounts.constants.AccountConstants;
+import com.easybytes.accounts.dto.AccountsDto;
 import com.easybytes.accounts.dto.CustomerDto;
 import com.easybytes.accounts.entity.Account;
 import com.easybytes.accounts.entity.Customer;
 import com.easybytes.accounts.exception.CustomerAlreadyExistsException;
+import com.easybytes.accounts.exception.ResourceNotFoundException;
+import com.easybytes.accounts.mapper.AccountMapper;
 import com.easybytes.accounts.mapper.CustomerMapper;
 import com.easybytes.accounts.repository.AccountRepository;
 import com.easybytes.accounts.repository.CustomerRepository;
@@ -56,6 +59,41 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public CustomerDto fetchAccount(String mobileNumber) {
-        return null;
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+        Account account = accountRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "customerId", String.valueOf(customer.getCustomerId())));
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountsDto(AccountMapper.mapToAccountDto(account,new AccountsDto()));
+        return customerDto;
+    }
+
+    @Override
+    public boolean updateAccount(CustomerDto customerDto) {
+        boolean isUpdate=false;
+        AccountsDto accountsDto=customerDto.getAccountsDto();
+        if(accountsDto != null){
+            Account account = accountRepository.findById(accountsDto.getAccountNumber()).orElseThrow(()->new ResourceNotFoundException("Account","AccountNumber",String.valueOf(accountsDto.getAccountNumber())));
+            AccountMapper.mapToAccounts(accountsDto,account);
+            account =accountRepository.save(account);
+
+            Long customerId=account.getCustomerId();
+            Customer customer=customerRepository.findById(customerId).orElseThrow(()->new ResourceNotFoundException("Customer","customerId",String.valueOf(customerId)));
+
+            CustomerMapper.mapToCustomer(customerDto,customer);
+            customerRepository.save(customer);
+            isUpdate=true;
+
+        }
+
+        return isUpdate;
+    }
+
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+   accountRepository.deleteById(customer.getCustomerId());
+   customerRepository.deleteById(customer.getCustomerId());
+   return true;
+
     }
 }
