@@ -1,7 +1,7 @@
 @echo off
 
 REM Change to the directory where your code is located
-cd "C:\Users\alokd\OneDrive\Desktop\MicroServices Practice"
+cd "C:\Users\alokd\OneDrive\Desktop\MicroServices Practice\Microservices 1"
 
 REM Add all changes to the staging area
 git add .
