@@ -26,6 +26,8 @@ public class Cards extends BaseEntity{
     private int totalLimit;
     private int amountUsed;
     private int availableAmount;
+    private String mobileNumber;
+    private String cardNumber;
 
 
 }
