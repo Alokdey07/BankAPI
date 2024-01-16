@@ -1,6 +1,8 @@
 package com.easybytes.loans.constants;
 
 public final class LoansConstants {
+    public static final String STATUS_417 = "417";
+
     private LoansConstants(){
         // restrict instantiation
     }
