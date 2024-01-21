@@ -60,7 +60,7 @@ public class CardController {
 
 
         iCardService.createCard(mobileNumber);
-        return ResponseEntity.status(HttpStatus.CREATED).body((new ResponseDto(CardConstants.STATUS_201, CardConstants.MESSAGE_201)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(CardConstants.STATUS_201, CardConstants.MESSAGE_201));
 
     }
 
