@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.easybytes.loans</groupId>
-	<artifactId>Loans</artifactId>
+	<artifactId>loans</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>Loans</name>
 	<description>Simple Loan Application</description>
 	<properties>
@@ -69,7 +70,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<builder>paketobuildpacks/builder-jammy-base:latest</builder>
+						<name>alok16/${project.artifactId}:s4</name>
+
 					</image>
 					<excludes>
 						<exclude>
