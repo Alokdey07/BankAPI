@@ -64,6 +64,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<name>alok16/${project.artifactId}:s4</name>
+
+					</image>
 
 					<excludes>
 						<exclude>
@@ -79,9 +83,14 @@
 				<version>3.4.0</version>
 				<configuration>
 					<to>
-						<image>docker.io/alok16/${project.artifactId}:s4</image>
+						<image>alok16/${project.artifactId}:s4</image>
 						<!--<credHelper>your-helper-name</credHelper>-->
 					</to>
+<!--					<from>-->
+<!--						<image>eclipse-temurin:17-jre</image>-->
+<!--					</from>-->
+
+
 				</configuration>
 			</plugin>
 		</plugins>
